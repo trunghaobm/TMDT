@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock  %}
+
+{% block content %}
+<h1>LOG IN</h1>
+<form method='post'>
+    {% csrf_token %}
+    <div>
+        <lable for='username'>Username</lable>
+    </div>
+    <div>
+        <input type='text' id='username' name='username'>
+    </div>
+    <div>
+        <lable for='password'>Password</lable>
+    </div>
+    <div>
+        <input type='password' id='password' name='password'>
+    </div>
+    <div>
+        <button type='submit'>Login</button>
+    </div>
+    {% for msg in messages %}
+        <p id='messages'>{{msg}}</p>
+    {% endfor %}
+    <a href={% url 'register' %}>Sign up</a>
+</form>
+{% endblock  %}
