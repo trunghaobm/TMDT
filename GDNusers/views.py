@@ -43,5 +43,9 @@ def logoutUser(request):
     return redirect('login')
 
 @login_required(login_url='login')
+def GioHang(request):
+    return render(request, 'access/GioHang.html')
+
+@login_required(login_url='login')
 def home(request):
     return render(request, 'home.html')

@@ -6,6 +6,7 @@
 {% if request.user.is_authenticated %}
     <h1>WELCOME TO MY WORLD, {{ request.user }}</h1>
     <a href={% url 'logout' %}>Log out</a>
+    <a href={% url 'gio hang' %}>Giỏ hàng</a>
 {% else %}
     <h1>WELCOME TO MY WORLD, {{ request.user }}</h1>
     <a href={% url 'login' %}>
