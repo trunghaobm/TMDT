@@ -1,14 +1,21 @@
+{% extends 'base.html'%}
+
 {% block title %}Register{% endblock  %}
 
 {% block content  %}
-<form method='POST' action=''>
-    {% csrf_token %}
-    {% for fields in form %}
-        {{fields.label}}<br>
-        {{fields}}<br>
-    {% endfor %}
-    {{form.errors}}
-    <input type='submit' name='Create'>
-    <a href={% url 'login' %}>Log in</a>
-</form>
+<div class="login-container">
+    <div class="login-layout">
+        <form method='post' class="form-login">
+            <h1>Sign up</h1>
+            {% csrf_token %}
+            {% for fields in form %}
+                {{fields.label}}<br>
+                {{fields}}<br>
+            {% endfor %}
+            {{form.errors}}
+            <input type='submit' name='Create'>
+            <a href={% url 'login' %}>Log in</a>
+        </form>
+    </div>
+</div>
 {% endblock  %}

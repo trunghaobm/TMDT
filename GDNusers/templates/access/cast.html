@@ -1,0 +1,127 @@
+{% extends 'access/home.html' %}
+
+{% block title%}Giỏ hàng{% endblock %}
+
+{% block body %}
+    <div class="starter-template" style="text-align:center">
+      <h1>Giỏ Hàng</h1>
+    </div>
+    <div class="d-flex justify-content-center mb-0">
+      <div>
+        <table class="table-cast">
+          <tr class="table-cast-header">
+            <th style="width:50px"><input type="checkbox" class="medium-checkbox" name="all" ></th>
+            <th style="width:500px">Sản phẩm</th>
+            <th style="width:200px">Số lượng</th>
+            <th style="width:200px">Thao tác</th>
+          </tr>
+          {% for item in data %}
+          <tr>
+            <td style="width:50px">
+              <input type="checkbox" class="medium-checkbox" name="checkbox{{ item }}" onClick="addCast(this,'{{ item }}')">
+            </td>
+            <td>
+              <div class="d-flex justify-content-start mb-3">
+                {% load static %}
+                <img src="{% static 'images/test_img.jpg' %}" class="img-cast">
+                <div>
+                  <h3>
+                    Name
+                  </h3>
+                  <h5 id="dongia{{ item }}">
+                    10.000
+                  </h5>
+                </div>
+                <div styl style="width:100%">
+                  <div class="cast-pay">
+                    <p id = "castpay{{ item }}">10.000</p>
+                  </div>
+                  <form method="POST">
+                    <div class="d-flex justify-content-end mb-3">
+                      <div>
+                        <button type="button" id="minus" name="minus" onClick="minusCount('count{{ item }}','dongia{{ item }}','castpay{{ item }}')">
+                          -
+                        </button>
+                      </div>
+                      <div>
+                        <input value="10" type="number" id="count{{ item }}" name="count" class="text-count" value={{ count }} onchange="changeCount(this,'dongia{{ item }}','castpay{{ item }}')">
+                      </div>
+                      <div>
+                        <button type="button" id="plus" name="plus" onClick="plusCount('count{{ item }}','dongia{{ item }}','castpay{{ item }}')">
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </td>
+            <td>
+            </td>
+            <td>
+              <a href="#"><button>Bỏ khỏi giỏ hàng</button></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        <form method="POST" class="paybar sticky-bot justify-content-end">
+          <div name="cost-total" class="p-2">
+            <label id="cost-total">
+              0 VND
+            </label>
+          </div>
+          <div class="p-2">
+            <a href={% url 'pay' %}>
+              <button class="submit">
+                Thanh toán
+              </button>
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <script>
+      function plusCount(count, dongia, castpay) {
+        var soLuong =  parseInt(document.getElementById(count).value.replaceAll('.',''));
+        soLuong = soLuong + 1;
+        document.getElementById(count).value = String(soLuong);
+        var dg = parseInt(document.getElementById(dongia).innerHTML.replaceAll('.',''));
+        document.getElementById(castpay).innerHTML = (soLuong * dg).toLocaleString().replaceAll(',','.') + " VND";
+      }
+
+      function changeCount(element, dongia, castpay) {
+        var soLuong =  parseInt(element.value.replaceAll('.',''));
+        if (soLuong < 1){
+          soLuong = 1;
+        }
+        element.value = String(soLuong);
+        var dg = parseInt(document.getElementById(dongia).innerHTML.replaceAll('.',''));
+        document.getElementById(castpay).innerHTML = (soLuong * dg).toLocaleString().replaceAll(',','.') + " VND";
+      }
+
+      function minusCount() {
+        var soLuong =  parseInt(document.getElementById(count).value.replaceAll('.',''));
+        if (soLuong > 1){
+          soLuong = soLuong - 1;
+          document.getElementById(count).value = String(soLuong);
+          var dg = parseInt(document.getElementById(dongia).innerHTML.replaceAll('.',''));
+          document.getElementById(castpay).innerHTML = (soLuong * dg).toLocaleString().replaceAll(',','.') + " VND";
+        }
+      }
+
+      function addCast(element, item) {
+        var eleCast = parseInt(document.getElementById("castpay" + item).innerHTML.replaceAll('.','').replaceAll(" VND",""));
+        var oldCast = parseInt(document.getElementById("cost-total").innerHTML.replaceAll('.','').replaceAll(" VND",""));
+        var newCast = 0;
+        if (element.checked == true){
+          newCast = oldCast + eleCast;
+        }
+        else{
+          newCast = oldCast - eleCast;
+        }
+        document.getElementById("cost-total").innerHTML = newCast.toLocaleString().replaceAll(',','.') + " VND";
+      }
+    </script>
+
+{% endblock body %}

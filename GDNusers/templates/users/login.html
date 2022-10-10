@@ -3,27 +3,35 @@
 {% block title %}Login{% endblock  %}
 
 {% block content %}
-<h1>LOG IN</h1>
-<form method='post'>
-    {% csrf_token %}
-    <div>
-        <lable for='username'>Username</lable>
+<div class="login-container">
+    <div class="login-layout">
+        <form method='post' class="form-login">
+            {% csrf_token %}
+            <h1>LOG IN</h1>
+            <div>
+                <lable for='username'>Username</lable>
+            </div>
+            <div>
+                <input type='text' id='username' name='username' class="login-text">
+            </div>
+            <div>
+                <lable for='password'>Password</lable>
+            </div>
+            <div>
+                <input type='password' id='password' name='password'  class="login-text">
+            </div>
+            {% for msg in messages %}
+                <p id='messages'>{{msg}}</p>
+            {% endfor %}
+            <div class="d-flex justify-content-between mb-3">
+                <a href={% url 'register' %}>Sign up</a>
+                <div>
+                    <button type='submit' id="btn-login">
+                        Login
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <input type='text' id='username' name='username'>
-    </div>
-    <div>
-        <lable for='password'>Password</lable>
-    </div>
-    <div>
-        <input type='password' id='password' name='password'>
-    </div>
-    <div>
-        <button type='submit'>Login</button>
-    </div>
-    {% for msg in messages %}
-        <p id='messages'>{{msg}}</p>
-    {% endfor %}
-    <a href={% url 'register' %}>Sign up</a>
-</form>
+</div>
 {% endblock  %}

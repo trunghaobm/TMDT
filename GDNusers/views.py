@@ -1,9 +1,14 @@
+from email import contentmanager
+from itertools import count
+from operator import mod
+from tkinter.messagebox import RETRY
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm, LoginUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from . import models
 
 # Create your views here.
 def register(request):
@@ -40,12 +45,54 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 @login_required(login_url='login')
-def GioHang(request):
-    return render(request, 'access/GioHang.html')
+def cast(request):
+    context ={
+        'data' : list(range(10)),
+        'count': 1,
+    }
+    return render(request, 'access/cast.html', context)
 
-@login_required(login_url='login')
 def home(request):
-    return render(request, 'access/home.html')
+    catelist = {}
+    catename = models.Category().toList()
+    products =[]
+    for cate in catename:
+        products = models.Product().toList(cate=cate)
+        catelist[cate] = products
+    #endfor
+    context ={
+        'categories' : catelist,
+    }
+    return render(request, 'access/home.html', context)
+
+@login_required(login_url='login')
+def pay(request):
+    context = {
+        
+    }
+    return render(request, 'access/pay.html', context)
+
+@login_required(login_url='login')
+def profile(request):
+    context = {
+        
+    }
+    return render(request, 'access/profile.html', context)
+
+def search(request):
+    cate = models.Category().toList()
+    context = {
+        'categories' : cate,
+    }
+    return render(request, 'access/search.html', context)
+
+@permission_required('administrator', login_url='login')
+def manage(request):
+    cate = models.Category().toList()
+    context = {
+        'categories' : cate,
+    }
+    return render(request, 'admin/manage.html', context)

@@ -1,3 +1,13 @@
+#text-linethrough {
+    text-decoration: line-through;
+}
+
+#btn-login {
+    background-color: blue;
+    width: 75px;
+    color: white;
+}
+
 .text {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -59,7 +69,14 @@
     background-color: lightblue;
 }
 
-.nav-verical{
+.nav-sidebar{
+    background-color: lightblue;
+    width: 200px;
+}
+
+.right-sidebar {
+    display: flex;
+    width: 250px;
     background-color: lightblue;
 }
 
@@ -69,3 +86,130 @@
     margin-right: auto;
     width: 100%;
   }
+
+.card-img {
+    width: 100px;
+    height: 100px;
+}
+
+.diplay-flex {
+    display: flex;
+}
+
+.category-header {
+    background-color: green;
+    color: violet;
+    height: 50px;
+}
+
+.grid-fixed {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: minmax(100px, auto);
+    justify-items: center;
+}
+
+.icon-new {
+    width: 40px;
+    height: 40px;
+}
+
+.drop-item-right {
+    right: 0;
+    left: auto;
+}
+
+.text-banner {
+    text-align: center;
+    width: 100%;
+    height: 300px;
+    background-color: lightgray;
+    margin-bottom: 50px;
+    padding: 50px;
+}
+
+.card-preview {
+    width: 400px;
+    margin-top: 50px;
+}
+
+.table-cast{
+    border: none;
+    margin: 50px;
+    
+}
+
+.table-cast-header {
+    background-color: black;
+    color: white;
+    height: 100px;
+    width: auto;
+    font-size: 30px;
+}
+
+.paybar {
+    background-color: red;
+    color: white;
+    height: 100px;
+    width: auto;
+    font-size: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    align-items: center;
+}
+
+.sticky-bot {
+    position: sticky;
+    bottom: 10px;
+}
+
+.img-cast {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.cast-pay {
+    font-style: italic;
+    text-decoration: underline;
+    text-align: right;
+}
+
+.text-count {
+    width: 50px;
+    text-align: right;
+}
+
+.login-layout {
+    display: block;
+    margin: auto;
+    width: auto;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    height: 500px;
+}
+
+.login-text {
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.form-login {
+    background-color: lightgray;
+}
+
+.medium-checkbox {
+    width: 40px;
+    height: 40px;
+    align-self: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

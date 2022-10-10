@@ -1,0 +1,25 @@
+{% extends 'access/home.html' %}
+
+{% block body %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>CATEGORY</th>
+        <th>TÁC VỤ</th>
+    </tr>
+    {% for cate in categories %}
+    <tr>
+        <td>
+            <a href="#">{{ cate.id }}</a>
+        </td>
+        <td>
+            <a href="#">{{ cate.name }}</a>
+        </td>
+        <td>
+            <a href="#">Chỉnh sửa</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock body %}
+
