@@ -1,44 +1,76 @@
-from email.mime import image
-from email.policy import default
-from importlib.metadata import requires
-from itertools import product
 from django.db import models
-from django.forms import CharField, ImageField
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser
+)
 
 # Create your models here.
-class User(models.Model):
-    id = models.CharField(
-        max_length=10,
-        default=' ',
-        primary_key=True,
-        null=False,
+class MyUserManager(BaseUserManager):
+    def create_user(self, name, avatar, username, date_of_birth, password=None):
+        user = self.model(
+            name=name,
+            avatar=avatar,
+            username=username,
+            date_of_birth=date_of_birth,
         )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, name, avatar, username, date_of_birth, password=None):
+        user = self.create_user(
+            name=name,
+            avatar=avatar,
+            username=username,
+            password=password,
+            date_of_birth=date_of_birth,
+        )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+
+class MyUser(AbstractBaseUser):
     name = models.CharField(
-        max_length=100,
-        null=False,
-        )
+        max_length=255,
+        unique=True,
+    )
     avatar = models.ImageField(
-        null=False,
-        )
+        upload_to='images/uploads/avatars',
+        blank=True,
+    )
     username = models.CharField(
-        max_length=100,
-        null=False,
+        unique=True,
+        max_length=255,
     )
-    password = models.CharField(
-        max_length=100,
-        null=False,
-    )
-    repassword = models.CharField(
-        max_length=100,
-    )
-    permission = models.CharField(
-        max_length=10,
-        null=False,
-    )
-    
+    date_of_birth = models.DateField()
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+
+    objects = MyUserManager()
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['name','avatar', 'date_of_birth']
+
     def __str__(self):
         return self.name
 
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
+    
 class Product(models.Model):
     id = models.CharField(
         max_length=10,
