@@ -1,3 +1,5 @@
 .pyc
 GDNusers/migrations/
 testapp/
+db.sqlite3
+Saveimage/

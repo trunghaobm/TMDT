@@ -1,0 +1,48 @@
+{% extends 'access/home.html' %}
+
+{% block title %} {{data.name}} {% endblock title %}
+{% load static %}
+{% block body %}
+
+<div class="d-flex justify-content-start mb-3" style="margin:0px">
+    <div class="left-sidebar">
+        <h1>AD HERE</h1>
+    </div>
+    <div class="content-center">
+        <div class="product-details">
+            <img src="{% static 'media' %}/{{data.img}}" class="details-img"> 
+            <div class="product-main-details">
+                <div name="productname">
+                    <h1>{{ data }}</h1>
+                </div>
+                <div>
+                    <div style="position: relative; bottom: 0">
+                        <div class="d-flex justify-content-between">
+                            <div name="oldprice">
+                                {{data.oldprice}}
+                            </div>
+                            <div name="newprice">
+                                {{data.newprice}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mb-3">
+                    <a href={% url 'cast' 1 %} class="add-link m-2">
+                        <button class="btn btn-primary">
+                        Thêm vào giỏ hàng
+                        </button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-left: 100px">
+            <h3>{{data.details}}</h3>
+        </div>
+    </div>
+    <div class="right-sidebar">
+        <h1>AD HERE</h1>
+    </div>
+</div>
+
+{% endblock body %}

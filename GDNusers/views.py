@@ -1,4 +1,5 @@
 from email import contentmanager
+from http.client import HTTPResponse
 from itertools import count
 from operator import mod
 from tkinter.messagebox import RETRY
@@ -48,10 +49,15 @@ def logoutUser(request):
     return redirect('home')
 
 @login_required(login_url='login')
-def cast(request):
+def cast(request, userid=None):
+    user=models.MyUser().get(id=userid)
+    cast=models.Cast().toList(user=userid)
+    totalpay=0
+    for c in cast:
+        totalpay+=int(c.total)
     context ={
-        'data' : list(range(10)),
-        'count': 1,
+        'data' : cast,
+        'total': totalpay
     }
     return render(request, 'access/cast.html', context)
 
@@ -69,20 +75,20 @@ def home(request):
     return render(request, 'access/home.html', context)
 
 @login_required(login_url='login')
-def pay(request):
+def pay(request, cast=None):
     context = {
         
     }
     return render(request, 'access/pay.html', context)
 
 @login_required(login_url='login')
-def profile(request):
+def profile(request, id=None):
     context = {
         
     }
     return render(request, 'access/profile.html', context)
 
-def search(request):
+def search(request, key=''):
     cate = models.Category().toList()
     context = {
         'categories' : cate,
@@ -96,3 +102,16 @@ def manage(request):
         'categories' : cate,
     }
     return render(request, 'admin/manage.html', context)
+
+def product(request, id=None):
+    context={
+
+    }
+    return render(request,'access/product.html', context)
+
+def details(request, product=None):
+    pro=models.Product().get(proid=product)
+    context={
+        'data': pro
+    }
+    return render(request, 'access/details.html', context)
