@@ -7,25 +7,27 @@ from django.contrib.auth.models import (
 from datetime import date
 # Create your models here.
 class MyUserManager(BaseUserManager):
-    def create_user(self, name, avatar, username, date_of_birth, password=None):
+    def create_user(self, name, avatar, username, date_of_birth, address, password=None):
         user = self.model(
             name=name,
             avatar=avatar,
             username=username,
             date_of_birth=date_of_birth,
+            address=address
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, name, avatar, username, date_of_birth, password=None):
+    def create_superuser(self, name, avatar, username, date_of_birth, address, password=None):
         user = self.create_user(
             name=name,
             avatar=avatar,
             username=username,
             password=password,
             date_of_birth=date_of_birth,
+            address=address,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -45,6 +47,11 @@ class MyUser(AbstractBaseUser):
         max_length=255,
     )
     date_of_birth = models.DateField()
+    address=models.CharField(
+        max_length=1000,
+        null=True,
+        blank=True,
+    )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
