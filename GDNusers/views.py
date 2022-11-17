@@ -75,9 +75,12 @@ def home(request):
     return render(request, 'access/home.html', context)
 
 @login_required(login_url='login')
-def pay(request, userid=None, productid=None):
+def pay(request,productid=None):
+    user=request.user
+    product=models.Product().get(proid=productid)
     context = {
-        
+        'user': user,
+        'product': product,
     }
     return render(request, 'access/pay.html', context)
 
@@ -119,6 +122,13 @@ def details(request, product=None):
 def buy(request, productid=None):
     pro=models.Product().get(proid=productid)
     context={
+        'user': request.user,
         'data': pro
     }
     return render(request, 'access/buy.html', context)
+
+def edit(request):
+    context={
+        'user': request.user,
+    }
+    return render(request, 'access/edit.html', context)

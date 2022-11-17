@@ -47,6 +47,11 @@ class MyUser(AbstractBaseUser):
         max_length=255,
     )
     date_of_birth = models.DateField()
+    phone=models.CharField(
+        max_length=12,
+        null=True,
+        blank=True,
+    )
     address=models.CharField(
         max_length=1000,
         null=True,
@@ -178,6 +183,7 @@ class Pay(models.Model):
         max_length=10
     )
     user=models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    product=models.ForeignKey(Product, on_delete=models.CASCADE)
     date=models.DateField(
         default=timezone.now
     )

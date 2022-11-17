@@ -254,3 +254,9 @@ input::-webkit-inner-spin-button {
     background-color: lightgray;
     padding: 25px;
 }
+
+.edit-form{
+    display: block;
+    margin: auto;
+    width: auto;
+}

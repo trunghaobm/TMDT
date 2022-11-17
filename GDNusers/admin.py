@@ -57,11 +57,11 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('name', 'avatar', 'username', 'date_of_birth', 'address', 'is_admin')
+    list_display = ('name', 'avatar', 'username', 'date_of_birth', 'phone', 'address', 'is_admin')
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('name', 'avatar', 'date_of_birth', 'address',)}),
+        ('Personal info', {'fields': ('name', 'avatar', 'date_of_birth', 'phone', 'address',)}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -69,7 +69,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('name', 'avatar', 'username', 'date_of_birth', 'address', 'password1', 'password2'),
+            'fields': ('name', 'avatar', 'username', 'date_of_birth', 'phone', 'address', 'password1', 'password2'),
         }),
     )
     search_fields = ('name',)

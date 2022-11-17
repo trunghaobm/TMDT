@@ -3,9 +3,41 @@
 {% block title%}Thanh toán{% endblock %}
 
 {% block body %}
+{% load humanize %}
 <div class="starter-template" style="text-align:center">
     <h1>
         Thanh toán
     </h1>
+</div>
+<div class="d-flex justify-content-between">
+    <div style="width: 50%">
+        <h6>Tên: {{user}}</h6><br>
+        <h6>
+            SĐT:
+            {% if user.phone %} 
+                {{user.phone}} <a href="#">Thay đổi SĐT</a>
+            {% else %}
+                <a href="#">Thêm SĐT</a>
+            {% endif %}
+        </h6>
+        <h6>
+            Địa chỉ:
+            {% if user.address %} 
+                {{user.address}} <a href="#">Thay đổi địa chỉ</a>
+            {% else %}
+                <a href="#">Thên địa chỉ</a>
+            {% endif %}
+        </h6>
+    </div>
+    <div style="width: 50%">
+        <h6>{{product.name}}</h6>
+        <h5>{{product.newprice|intcomma}} VND</h5>
+        <div>
+            
+        </div>
+    </div>
+</div>
+<div>
+    hoàn tất thanh toán
 </div>
 {% endblock body %}
