@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # my apps
     'GDNusers',
+    'django.contrib.humanize',
 ]
 
 HOME_REDIRECT_URL = '/'

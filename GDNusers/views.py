@@ -75,7 +75,7 @@ def home(request):
     return render(request, 'access/home.html', context)
 
 @login_required(login_url='login')
-def pay(request, cast=None):
+def pay(request, userid=None, productid=None):
     context = {
         
     }
@@ -115,3 +115,10 @@ def details(request, product=None):
         'data': pro
     }
     return render(request, 'access/details.html', context)
+
+def buy(request, productid=None):
+    pro=models.Product().get(proid=productid)
+    context={
+        'data': pro
+    }
+    return render(request, 'access/buy.html', context)
