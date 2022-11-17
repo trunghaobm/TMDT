@@ -1,0 +1,52 @@
+{% extends 'access/home.html' %}
+
+{% block title %} {{data.name}} {% endblock title %}
+{% load static %}
+{% block body %}
+{% load humanize %}
+<div class="d-flex justify-content-start mb-3" style="margin:0px">
+    <div class="left-sidebar">
+        <h1>AD HERE</h1>
+    </div>
+    <div class="content-center">
+        <div class="product-details">
+            <img src="{% static 'media' %}/{{data.img}}" class="details-img"> 
+            <div class="product-main-details">
+                <div name="productname">
+                    <h1>{{ data }}</h1>
+                </div>
+                <div>
+                    <div style="position: relative; bottom: 0">
+                        <div class="d-flex justify-content-between">
+                            <div name="oldprice">
+                                {{data.oldprice|intcomma}}
+                            </div>
+                            <div name="newprice">
+                                {{data.newprice|intcomma}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div method="POST" class="paybar sticky-bot justify-content-end">
+          <div name="cost-total" class="p-2">
+            <label id="cost-total">
+                {{data.newprice|intcomma}}
+            </label> VND
+          </div>
+          <div class="p-2">
+            <a href={% url 'pay' request.user.id data.id %}>
+              <button>
+                Thanh toán
+              </button>
+            </a>
+          </div>
+        </div>
+    </div>
+    <div class="right-sidebar">
+        <h1>AD HERE</h1>
+    </div>
+</div>
+
+{% endblock body %}

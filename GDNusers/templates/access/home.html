@@ -4,6 +4,7 @@
 {% block title %}Home{% endblock title %}
 {% load static %}
 {% block content %}
+{% load humanize %}
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href={% url 'home' %}>Home<span class="sr-only">(current)</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -16,17 +17,6 @@
           <a class="nav-link" href={% url 'cast' request.user.id %}>Giỏ hàng</a></a>
         </li>
         {% endif %}
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <ul class="navbar-nav mr-auto">
@@ -42,7 +32,7 @@
               {% if request.user.username == 'admin' %}
                 <a class="dropdown-item" href="http://127.0.0.1:8000/admin/">Manage</a>
               {% else %}
-                <a class="dropdown-item" href={% url 'profile' %}>Trang cá nhân</a>
+                <a class="dropdown-item" href={% url 'profile' request.user.id %}>Trang cá nhân</a>
               {% endif %}
               <a class="dropdown-item" href={% url 'logout' %}>Log out</a>
             </div>
@@ -122,14 +112,21 @@
               </div>
               <p class="card-text">{{ item.details }}</p>
               <div class="d-flex justify-content-between mb-2">
-                <div class="p-2">{{ item.newprice}}</div>
-                <div class="p-2" id="text-linethrough">{{ item.oldprice }}</div>
+                <div class="p-2">{{ item.newprice|intcomma}} VND</div>
+                {% if item.oldprice %}
+                  <div class="p-2" id="text-linethrough">{{ item.oldprice|intcomma }} VND</div>
+                {% endif %}
               </div>
             </div>
             <div class="card-footer">
               <div class="d-flex justify-content-end mb-3">
-                <a href={% url 'cast' 1 %} class="add-link m-2">
+                <a href={% url 'buy' item.id %} class="add-link m-2">
                   <button class="btn btn-primary">
+                    Mua ngay
+                  </button>
+                </a>
+                <a href="#" class="add-link m-2">
+                  <button class="btn btn-primary" id="text-linethrough">
                     Thêm vào giỏ hàng
                   </button>
                 </a>
