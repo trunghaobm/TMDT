@@ -28,12 +28,16 @@
                     </div>
                 </div>
             </div>
-                <div style="width: 50%; margin:50px">
+            <div style="width: 50%; margin:50px">
+                <form method="POST">
+                    {% csrf_token %}
                     <h6>Tên: {{user}}</h6><br>
                     <h6>SĐT: {{user.phone}}</h6>
                     <h6>Địa chỉ: {{user.address}}</h6>
-                    <h7><a href={% url 'edit' %}>Chỉnh Sửa</a></h7>
-                </div>
+                    <p id ="productid" hidden>{{data.id}}</p>
+                    <input type="submit" class="btn-submit-link" value="Chỉnh Sửa">
+                </form>
+            </div>
         </div>
         <div method="POST" class="paybar sticky-bot justify-content-end">
           <div name="cost-total" class="p-2">

@@ -1,0 +1,33 @@
+{% extends 'access/home.html' %}
+
+{% block title%}Đơn Hàng{% endblock %}
+
+{% block body %}
+{% load humanize %}
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Tên khách hàng</th>
+        <th>Tên sản phẩm</th>
+        <th>Số tiền</th>
+        <th>Hình thức giao hàng</th>
+        <th>Tên shipper</th>
+        <th>Trạng thái</th>
+        <th>Hành động</th>
+    </tr>
+    {% for item in data %}
+    <tr>
+        <td>{{item.id}}</td>
+        <td>{{item.pay.user}}</td>
+        <td>{{item.pay.product}}</td>
+        <td>{{item.pay.product.newprice|intcomma}} VND</td></br>
+        <td>{{item.method}}</td>
+        <td>{{item.shipper}}</td>
+        <td>{{item.shippingstatus}}</td>
+        <td><a href="#">Hủy</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

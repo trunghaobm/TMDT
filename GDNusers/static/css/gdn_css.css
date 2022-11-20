@@ -260,3 +260,13 @@ input::-webkit-inner-spin-button {
     margin: auto;
     width: auto;
 }
+
+.btn-submit-link{
+    color: blue;
+    background-color: transparent;
+    border: 0px;
+}
+
+.btn-submit-link:hover{
+    cursor: pointer;
+}

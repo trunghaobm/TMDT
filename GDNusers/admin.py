@@ -76,7 +76,6 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('name',)
     filter_horizontal = ()
 
-
 # Now register the new UserAdmin...
 admin.site.register(MyUser, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
@@ -87,3 +86,7 @@ admin.site.register(models.Category)
 admin.site.register(models.Product)
 admin.site.register(models.Cast)
 admin.site.register(models.Pay)
+admin.site.register(models.Payment)
+admin.site.register(models.Shipping)
+admin.site.register(models.Delivery)
+admin.site.register(models.Shipper)

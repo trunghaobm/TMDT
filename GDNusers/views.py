@@ -2,6 +2,8 @@ from email import contentmanager
 from http.client import HTTPResponse
 from itertools import count
 from operator import mod
+from django.utils import timezone
+from datetime import date
 from tkinter.messagebox import RETRY
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -10,7 +12,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from . import models
-
 # Create your views here.
 def register(request):
     if request.user.is_authenticated:
@@ -76,18 +77,43 @@ def home(request):
 
 @login_required(login_url='login')
 def pay(request,productid=None):
-    user=request.user
+    msg=[]
+    payment=models.Payment().ToList()
     product=models.Product().get(proid=productid)
+    if request.method == 'POST':
+        paymenid=request.POST.get('delivery')
+        if paymenid == 'choose':
+            msg.append('Vui lòng chọn hình thức thanh toán!!!')
+            pass
+        else:
+            pay=models.Pay.objects.create(
+                user=request.user,
+                product=product,
+                date=date.today()
+            )
+            delivery=models.Delivery.objects.create(
+                pay = pay,
+                method=models.Payment.objects.get(id=paymenid),
+                shipper=models.Shipper.objects.get(id=0),
+                shippingstatus=models.Shipping.objects.get(id=1)
+            )
+            context={
+                'delivery': delivery
+            }
+            return redirect('delivery')
+    
     context = {
-        'user': user,
+        'user': request.user,
         'product': product,
+        'msg': msg,
+        'payment': payment
     }
     return render(request, 'access/pay.html', context)
 
 @login_required(login_url='login')
 def profile(request, id=None):
     context = {
-        
+        'user': request.user
     }
     return render(request, 'access/profile.html', context)
 
@@ -120,15 +146,33 @@ def details(request, product=None):
     return render(request, 'access/details.html', context)
 
 def buy(request, productid=None):
+    if request.method == "POST":
+        request.method = None
+        return redirect('edit')
     pro=models.Product().get(proid=productid)
     context={
         'user': request.user,
-        'data': pro
+        'data': pro,
     }
     return render(request, 'access/buy.html', context)
 
 def edit(request):
+    if request.method == 'POST':
+        userid = request.user.id
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        pid = request.POST.get("pid")
+        models.MyUser().update(userid, phone, address)
+        request.method = None
+        return redirect('buy', pid)
     context={
         'user': request.user,
     }
     return render(request, 'access/edit.html', context)
+
+@login_required
+def delivery(request):
+    context={
+        'data': models.Delivery().ToList(userid=request.user.id)
+    }
+    return render(request, 'access/delivery.html', context)

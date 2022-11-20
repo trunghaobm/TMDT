@@ -6,7 +6,27 @@
 {% load humanize %}
 
 <div class="edit-form">
-    
+    <form method="POST">
+        {% csrf_token %}
+        <h1>{{user|upper}}</h1>
+        <div>
+            <lable for='phone'>SĐT</lable>
+        </div>
+        <div>
+            <input type='text' id='phone' name='phone' class="login-text" value="{{user.phone}}">
+        </div>
+        <div>
+            <lable for='address'>Địa chỉ</lable>
+        </div>
+        <div>
+            <input type='text' id='address' name='address' class="login-text" value="{{user.address}}">
+        </div>
+        <div>
+            <p hidden id="pid">{{pid}}</p>
+            <button type="submit" id="edit">Chỉnh sửa</button>
+            <a href="javascript:javascript:history.go(-1)">Hủy</a>
+        </div>
+    </form>
 </div>
 
 {% endblock body %}
