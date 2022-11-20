@@ -3,9 +3,52 @@
 {% block title%}Thanh toán{% endblock %}
 
 {% block body %}
+{% load humanize %}
 <div class="starter-template" style="text-align:center">
     <h1>
         Thanh toán
     </h1>
+</div>
+<form method="POST">
+    {% csrf_token %}
+    <div class="d-flex justify-content-between">
+        <div style="width: 50%; margin:50px">
+            <p id="userid" hidden>{{user.id}}</p>
+            <h6 id="name">Tên: {{user}}</h6><br>
+            <h6 id="phone">SĐT: {{user.phone}}</h6>
+            <h6 id="address">Địa chỉ: {{user.address}}</h6>
+        </div>
+        <div style="width: 50%">
+            <P id="proid" hidden>{{product.id}}</p>
+            <h6 id="proname">{{product.name}}</h6>
+            <h5 id="price">{{product.newprice|intcomma}} VND</h5>
+            <div>
+                <label for="delivery">Vui kòng chọn hình thức vận chuyển</label><br>
+                <select name="delivery" id="delivery">
+                    <option value="choose">Chọn</option>
+                    {% for pm in payment %}
+                    {% if pm.is_using %}
+                        <option value="{{pm.id}}">
+                            {{pm.name}}
+                        </option>
+                    {% else %}
+                        <option value="{{pm.id}}" disabled>
+                            {{pm.name}} ...update soon
+                        </option>
+                    {% endif %}
+                    {% endfor %}
+                    <option value="more" disabled>Đang cập nhật các hình thức khác...</option>
+                </select>
+                    <br>
+                {% for m in msg %}
+                    <p>{{m}}</p>
+                {% endfor %}
+                <input type="submit" value="Mua hàng" class="btn primary-btn">
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    hoàn tất thanh toán
 </div>
 {% endblock body %}

@@ -4,7 +4,7 @@
 {% load static %}
 {% block body %}
 {% load humanize %}
-<div class="d-flex justify-content-start mb-3" style="margin:0px">
+<div class="d-flex justify-content-between mb-3" style="margin:0px">
     <div class="left-sidebar">
         <h1>AD HERE</h1>
     </div>
@@ -28,6 +28,16 @@
                     </div>
                 </div>
             </div>
+            <div style="width: 50%; margin:50px">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h6>Tên: {{user}}</h6><br>
+                    <h6>SĐT: {{user.phone}}</h6>
+                    <h6>Địa chỉ: {{user.address}}</h6>
+                    <p id ="productid" hidden>{{data.id}}</p>
+                    <input type="submit" class="btn-submit-link" value="Chỉnh Sửa">
+                </form>
+            </div>
         </div>
         <div method="POST" class="paybar sticky-bot justify-content-end">
           <div name="cost-total" class="p-2">
@@ -36,10 +46,12 @@
             </label> VND
           </div>
           <div class="p-2">
-            <a href={% url 'pay' request.user.id data.id %}>
-              <button>
-                Thanh toán
-              </button>
+            <a href={% url 'pay' data.id %}>
+                {% if user.phone and user.address %}
+                    <button>Thanh toán</button>
+                {% else %}
+                    <button disabled>Thanh toán</button>
+                {% endif %}
             </a>
           </div>
         </div>
