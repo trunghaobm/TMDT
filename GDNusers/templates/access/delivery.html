@@ -25,7 +25,7 @@
         <td>{{item.method}}</td>
         <td>{{item.shipper}}</td>
         <td>{{item.shippingstatus}}</td>
-        <td><a href="#">Hủy</a></td>
+        <td><a href={% url 'deliverydel' item.id%}>Hủy</a></td>
     </tr>
     {% endfor %}
 </table>

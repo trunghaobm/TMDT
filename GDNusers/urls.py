@@ -19,7 +19,8 @@ urlpatterns = [
     path('details/product=<product>', views.details, name='details'),
     path('buy/productid=<productid>', views.buy, name='buy'),
     path('edit/', views.edit, name='edit'),
-    path('delivery/', views.delivery, name='delivery')
+    path('delivery/', views.delivery, name='delivery'),
+    path('delivery/delete/id=<deliveryid>', views.deliverydel, name='deliverydel'),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

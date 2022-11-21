@@ -176,3 +176,8 @@ def delivery(request):
         'data': models.Delivery().ToList(userid=request.user.id)
     }
     return render(request, 'access/delivery.html', context)
+
+@login_required
+def deliverydel(request, deliveryid=None):
+    models.Delivery().Delete(id=deliveryid)
+    return redirect('delivery')

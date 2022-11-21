@@ -274,4 +274,5 @@ class Delivery(models.Model):
             listret.extend(list(Delivery.objects.filter(pay=p)))
         return listret
 
-# %%
+    def Delete(self, id=None):
+        Delivery.objects.get(id=id).delete()
