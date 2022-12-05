@@ -145,6 +145,7 @@ def details(request, product=None):
     }
     return render(request, 'access/details.html', context)
 
+@login_required
 def buy(request, productid=None):
     if request.method == "POST":
         request.method = None
